@@ -22,7 +22,7 @@ public class SearchFunctionPage extends BasePage {
     public WebElement placeHolder;
 
     @FindBy(xpath = "//div/h4[@class='product-name']")
-            public WebElement icludeLetterProduct;
+            public WebElement includeLetterProduct;
 
     Random random = new Random();
 
@@ -30,8 +30,6 @@ public class SearchFunctionPage extends BasePage {
     int rightLimit = 122; // letter 'z'
     int targetStringLength = 3;
 
-//    List<String> productString;
-//    public  static String letter;
 
     public void createRandomCharacter() {
 

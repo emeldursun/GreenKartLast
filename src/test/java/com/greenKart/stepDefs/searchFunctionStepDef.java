@@ -1,6 +1,8 @@
 package com.greenKart.stepDefs;
 
+import com.github.javafaker.Faker;
 import com.greenKart.pages.BasePage;
+import com.greenKart.pages.ProductPage;
 import com.greenKart.pages.SearchFunctionPage;
 import com.greenKart.utilities.BrowserUtils;
 import com.greenKart.utilities.Driver;
@@ -15,9 +17,14 @@ import org.openqa.selenium.interactions.Actions;
 import java.util.Random;
 
 public class searchFunctionStepDef extends BasePage {
-    SearchFunctionPage SearchFunctionPage = new SearchFunctionPage();
+    SearchFunctionPage SearchPage = new SearchFunctionPage();
+    ProductPage ProductPage= new ProductPage();
+
+    Faker faker = new Faker();
+
 
     @When("User clicks on search box")
+
     public void userClicksOnSearchBox() {
 
         new SearchFunctionPage().searchButton.click();
@@ -41,7 +48,7 @@ public class searchFunctionStepDef extends BasePage {
         actions.keyUp(Keys.CONTROL);
         actions.build().perform();
         BrowserUtils.waitFor(5);
-        SearchFunctionPage.searchButton.click();
+        SearchPage.searchButton.click();
 
 
     }
@@ -59,19 +66,19 @@ public class searchFunctionStepDef extends BasePage {
 
     @Then("User will be able to see the typed letters in the search box.")
     public void userWillBeAbleToSeeTheTypedLettersInTheSearchBox() {
-       SearchFunctionPage.createRandomCharacter();
+       SearchPage.createRandomCharacter();
 
     }
 
     @Then("Verify that the placeholder at the search box should be {string}.")
     public void verifyThatThePlaceholderAtTheSearchBoxShouldBe(String arg0) {
-        SearchFunctionPage.getPlaceHolderText();
+        SearchPage.getPlaceHolderText();
     }
 
     @When("user types {string} in the search box")
     public void userTypesInTheSearchBox(String letter) {
 
-        SearchFunctionPage.searchButton.sendKeys(letter);
+        SearchPage.searchButton.sendKeys(letter);
         BrowserUtils.waitFor(5);
 
     }
@@ -79,7 +86,25 @@ public class searchFunctionStepDef extends BasePage {
     @Then("user will see the product results containing {string}")
     public void userWillSeeTheProductResultsContaining(String letter) {
 
-        SearchFunctionPage.searchALetter(letter);
+        SearchPage.searchALetter(letter);
 
     }
+
+    @When("User enters random characters in the search box.")
+    public void userEntersRandomCharactersInTheSearchBox() {
+
+        ProductPage.searchBoxBefore = ProductPage.searchBox.getText();
+        ProductPage.searchBox.sendKeys(faker.letterify("??"));
+    }
+
+    @Then("User will be able to type in the search box.")
+    public void userWillBeAbleToTypeInTheSearchBox() {
+
+        ProductPage.searchBoxAfter= ProductPage.searchBox.getText();
+
+        Assert.assertNotSame(ProductPage.searchBoxBefore, ProductPage.searchBoxAfter);
+
+        System.out.println("ProductPage.searchBoxBefore = " + ProductPage.searchBoxBefore);
+    }
+
 }
