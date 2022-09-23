@@ -30,6 +30,9 @@ public class SearchFunctionPage extends BasePage {
     int rightLimit = 122; // letter 'z'
     int targetStringLength = 3;
 
+//    List<String> productString;
+//    public  static String letter;
+
     public void createRandomCharacter() {
 
         String writeRandomChar = random.ints(leftLimit, rightLimit).limit(targetStringLength)
@@ -49,11 +52,9 @@ public class SearchFunctionPage extends BasePage {
         System.out.println(placeHolder);
     }
 
-
     public void searchALetter(String letter){
-        searchButton.click();
-        searchButton.sendKeys(letter);
-        BrowserUtils.waitFor(5);
+
+        letter = Driver.get().findElement(By.xpath("//input[@type='search']")).getAttribute("value");
 
         List<WebElement> products = Driver.get().findElements(By.xpath("//div/h4[@class='product-name']"));
         List<String> productString = BrowserUtils.getElementsText(products);
@@ -62,13 +63,12 @@ public class SearchFunctionPage extends BasePage {
 
             String a = productString.get(i).toLowerCase();
             System.out.println(a);
-           Assert.assertTrue(a.contains(letter));
+            Assert.assertTrue(a.contains(letter));
 
 
         }
-
-
+        }
     }
 
-    }
+
 

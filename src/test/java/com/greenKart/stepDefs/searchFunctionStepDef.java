@@ -15,14 +15,13 @@ import org.openqa.selenium.interactions.Actions;
 import java.util.Random;
 
 public class searchFunctionStepDef extends BasePage {
+    SearchFunctionPage SearchFunctionPage = new SearchFunctionPage();
 
     @When("User clicks on search box")
     public void userClicksOnSearchBox() {
 
         new SearchFunctionPage().searchButton.click();
         BrowserUtils.waitFor(3);
-
-
 
     }
 
@@ -42,7 +41,7 @@ public class searchFunctionStepDef extends BasePage {
         actions.keyUp(Keys.CONTROL);
         actions.build().perform();
         BrowserUtils.waitFor(5);
-        new SearchFunctionPage().searchButton.click();
+        SearchFunctionPage.searchButton.click();
 
 
     }
@@ -60,20 +59,27 @@ public class searchFunctionStepDef extends BasePage {
 
     @Then("User will be able to see the typed letters in the search box.")
     public void userWillBeAbleToSeeTheTypedLettersInTheSearchBox() {
-        new SearchFunctionPage().createRandomCharacter();
+       SearchFunctionPage.createRandomCharacter();
 
     }
 
     @Then("Verify that the placeholder at the search box should be {string}.")
     public void verifyThatThePlaceholderAtTheSearchBoxShouldBe(String arg0) {
-        new SearchFunctionPage().getPlaceHolderText();
+        SearchFunctionPage.getPlaceHolderText();
     }
 
     @When("user types {string} in the search box")
-    public void userTypesInTheSearchBox(String prod) {
+    public void userTypesInTheSearchBox(String letter) {
 
-        new SearchFunctionPage().searchALetter(prod);
+        SearchFunctionPage.searchButton.sendKeys(letter);
+        BrowserUtils.waitFor(5);
 
+    }
+
+    @Then("user will see the product results containing {string}")
+    public void userWillSeeTheProductResultsContaining(String letter) {
+
+        SearchFunctionPage.searchALetter(letter);
 
     }
 }

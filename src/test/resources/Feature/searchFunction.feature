@@ -28,13 +28,6 @@ Feature: search box testing
     When User enters random characters in the search box.
     Then User will be able to type in the search box.
 
-  Scenario: User should be able to search field and press Enter key.
-
-    When User enters a random product name
-    And User presses Enter key.
-    Then User will be able to find that product.
-
-@wip
   Scenario: User should be able to see the typed text properly.
 
     When User enters random characters in the search box.
@@ -53,8 +46,7 @@ Feature: search box testing
   Scenario: User should be able to see the auto-suggestion after typing letters in the search box.
 
     Given user types "c" in the search box
-    When user gets all the list of products
-    Then user will see the product results containing letter
+    Then user will see the product results containing "c"
 
 
   Scenario: User should be able to search and find a product
