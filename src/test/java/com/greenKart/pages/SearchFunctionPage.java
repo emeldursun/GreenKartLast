@@ -66,6 +66,23 @@ public class SearchFunctionPage extends BasePage {
 
         }
         }
+
+    public void getRandomProductName(){
+
+        BrowserUtils.waitFor(5);
+
+        List<WebElement> elements = Driver.get().findElements(By.xpath("//div/h4[@class='product-name']"));
+        List<String> elementString = BrowserUtils.getElementsText(elements);
+
+        int randomProduct= random.nextInt(elementString.size() );
+        randomName=elementString.get(randomProduct);
+
+        BrowserUtils.waitFor(5);
+        System.out.println(randomName);
+
+
+    }
+
     }
 
 

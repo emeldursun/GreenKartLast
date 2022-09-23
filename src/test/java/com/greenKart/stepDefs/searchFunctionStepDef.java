@@ -11,9 +11,12 @@ import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import org.junit.Assert;
+import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 
+import java.util.List;
 import java.util.Random;
 
 public class searchFunctionStepDef extends BasePage {
@@ -107,4 +110,31 @@ public class searchFunctionStepDef extends BasePage {
         System.out.println("ProductPage.searchBoxBefore = " + ProductPage.searchBoxBefore);
     }
 
+    @When("User enters a random product")
+    public void userEntersARandomProduct() {
+
+        getRandomProductName();
+        SearchPage.searchButton.sendKeys(randomName);
+    }
+
+    @Then("User will be able to find that product.")
+    public void userWillBeAbleToFindThatProduct() {
+
+        String typedProduct=Driver.get().findElement(By.xpath("//input[@type='search']")).getAttribute("value");
+
+        BrowserUtils.waitFor(3);
+
+        List<WebElement> products = Driver.get().findElements(By.xpath("//div/h4[@class='product-name']"));
+        List<String> productString = BrowserUtils.getElementsText(products);
+
+        BrowserUtils.waitFor(5);
+
+        System.out.println("typedProduct = " + typedProduct);
+        System.out.println("productString = " + productString);
+
+        Assert.assertTrue("verify that ",productString.contains(typedProduct));
+
+
+
+    }
 }
